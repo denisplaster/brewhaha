@@ -1,0 +1,707 @@
+type Brands {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  description: String!
+  image: UploadFile
+  brews(sort: String, limit: Int, start: Int, where: JSON): [Brews]
+}
+
+type BrandsAggregator {
+  count: Int
+}
+
+type BrandsConnection {
+  values: [Brands]
+  groupBy: BrandsGroupBy
+  aggregate: BrandsAggregator
+}
+
+type BrandsConnection_id {
+  key: ID
+  connection: BrandsConnection
+}
+
+type BrandsConnectionCreatedAt {
+  key: DateTime
+  connection: BrandsConnection
+}
+
+type BrandsConnectionDescription {
+  key: String
+  connection: BrandsConnection
+}
+
+type BrandsConnectionImage {
+  key: ID
+  connection: BrandsConnection
+}
+
+type BrandsConnectionName {
+  key: String
+  connection: BrandsConnection
+}
+
+type BrandsConnectionUpdatedAt {
+  key: DateTime
+  connection: BrandsConnection
+}
+
+type BrandsGroupBy {
+  _id: [BrandsConnection_id]
+  createdAt: [BrandsConnectionCreatedAt]
+  updatedAt: [BrandsConnectionUpdatedAt]
+  name: [BrandsConnectionName]
+  description: [BrandsConnectionDescription]
+  image: [BrandsConnectionImage]
+}
+
+input BrandsInput {
+  name: String
+  description: String!
+  image: ID
+  brews: [ID]
+}
+
+type Brews {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  description: String!
+  price: Float
+  image: UploadFile
+  brands: Brands
+}
+
+type BrewsAggregator {
+  count: Int
+  sum: BrewsAggregatorSum
+  avg: BrewsAggregatorAvg
+  min: BrewsAggregatorMin
+  max: BrewsAggregatorMax
+}
+
+type BrewsAggregatorAvg {
+  price: Float
+}
+
+type BrewsAggregatorMax {
+  price: Float
+}
+
+type BrewsAggregatorMin {
+  price: Float
+}
+
+type BrewsAggregatorSum {
+  price: Float
+}
+
+type BrewsConnection {
+  values: [Brews]
+  groupBy: BrewsGroupBy
+  aggregate: BrewsAggregator
+}
+
+type BrewsConnection_id {
+  key: ID
+  connection: BrewsConnection
+}
+
+type BrewsConnectionBrands {
+  key: ID
+  connection: BrewsConnection
+}
+
+type BrewsConnectionCreatedAt {
+  key: DateTime
+  connection: BrewsConnection
+}
+
+type BrewsConnectionDescription {
+  key: String
+  connection: BrewsConnection
+}
+
+type BrewsConnectionImage {
+  key: ID
+  connection: BrewsConnection
+}
+
+type BrewsConnectionName {
+  key: String
+  connection: BrewsConnection
+}
+
+type BrewsConnectionPrice {
+  key: Float
+  connection: BrewsConnection
+}
+
+type BrewsConnectionUpdatedAt {
+  key: DateTime
+  connection: BrewsConnection
+}
+
+type BrewsGroupBy {
+  _id: [BrewsConnection_id]
+  createdAt: [BrewsConnectionCreatedAt]
+  updatedAt: [BrewsConnectionUpdatedAt]
+  name: [BrewsConnectionName]
+  description: [BrewsConnectionDescription]
+  price: [BrewsConnectionPrice]
+  image: [BrewsConnectionImage]
+  brands: [BrewsConnectionBrands]
+}
+
+input BrewsInput {
+  name: String
+  description: String!
+  price: Float
+  image: ID
+  brands: ID
+}
+
+input createBrandsInput {
+  data: BrandsInput
+}
+
+type createBrandsPayload {
+  brand: Brands
+}
+
+input createBrewsInput {
+  data: BrewsInput
+}
+
+type createBrewsPayload {
+  brew: Brews
+}
+
+input createOrdersInput {
+  data: OrdersInput
+}
+
+type createOrdersPayload {
+  order: Orders
+}
+
+input createRoleInput {
+  data: RoleInput
+}
+
+type createRolePayload {
+  role: UsersPermissionsRole
+}
+
+input createUserInput {
+  data: UserInput
+}
+
+type createUserPayload {
+  user: UsersPermissionsUser
+}
+
+"""
+The `DateTime` scalar represents a date and time following the ISO 8601 standard
+"""
+scalar DateTime
+
+input deleteBrandsInput {
+  where: InputID
+}
+
+type deleteBrandsPayload {
+  brand: Brands
+}
+
+input deleteBrewsInput {
+  where: InputID
+}
+
+type deleteBrewsPayload {
+  brew: Brews
+}
+
+input deleteOrdersInput {
+  where: InputID
+}
+
+type deleteOrdersPayload {
+  order: Orders
+}
+
+input deleteRoleInput {
+  where: InputID
+}
+
+type deleteRolePayload {
+  role: UsersPermissionsRole
+}
+
+input deleteUserInput {
+  where: InputID
+}
+
+type deleteUserPayload {
+  user: UsersPermissionsUser
+}
+
+input FileInput {
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  public_id: String
+  related: [ID]
+}
+
+input InputID {
+  id: ID!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Brands | createBrandsPayload | updateBrandsPayload | deleteBrandsPayload | BrandsConnection | BrandsAggregator | BrandsGroupBy | BrandsConnection_id | BrandsConnectionCreatedAt | BrandsConnectionUpdatedAt | BrandsConnectionName | BrandsConnectionDescription | BrandsConnectionImage | Brews | createBrewsPayload | updateBrewsPayload | deleteBrewsPayload | BrewsConnection | BrewsAggregator | BrewsAggregatorSum | BrewsAggregatorAvg | BrewsAggregatorMin | BrewsAggregatorMax | BrewsGroupBy | BrewsConnection_id | BrewsConnectionCreatedAt | BrewsConnectionUpdatedAt | BrewsConnectionName | BrewsConnectionDescription | BrewsConnectionPrice | BrewsConnectionImage | BrewsConnectionBrands | Orders | createOrdersPayload | updateOrdersPayload | deleteOrdersPayload | OrdersConnection | OrdersAggregator | OrdersGroupBy | OrdersConnection_id | OrdersConnectionCreatedAt | OrdersConnectionUpdatedAt | OrdersConnectionAddress | OrdersConnectionPostalCode | OrdersConnectionCity | OrdersConnectionBrews | OrdersConnectionAmount | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+
+type Mutation {
+  createBrands(input: createBrandsInput): createBrandsPayload
+  updateBrands(input: updateBrandsInput): updateBrandsPayload
+  deleteBrands(input: deleteBrandsInput): deleteBrandsPayload
+  createBrews(input: createBrewsInput): createBrewsPayload
+  updateBrews(input: updateBrewsInput): updateBrewsPayload
+  deleteBrews(input: deleteBrewsInput): deleteBrewsPayload
+  createOrders(input: createOrdersInput): createOrdersPayload
+  updateOrders(input: updateOrdersInput): updateOrdersPayload
+  deleteOrders(input: deleteOrdersInput): deleteOrdersPayload
+
+  """Create a new role"""
+  createRole(input: createRoleInput): createRolePayload
+
+  """Update an existing role"""
+  updateRole(input: updateRoleInput): updateRolePayload
+
+  """Delete an existing role"""
+  deleteRole(input: deleteRoleInput): deleteRolePayload
+  createUser(input: createUserInput): createUserPayload
+  updateUser(input: updateUserInput): updateUserPayload
+  deleteUser(input: deleteUserInput): deleteUserPayload
+  upload(refId: ID, ref: String, source: String, file: Upload!): UploadFile!
+}
+
+type Orders {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  address: String!
+  postalCode: String!
+  city: String!
+  brews: JSON!
+  amount: Float!
+}
+
+type OrdersAggregator {
+  count: Int
+}
+
+type OrdersConnection {
+  values: [Orders]
+  groupBy: OrdersGroupBy
+  aggregate: OrdersAggregator
+}
+
+type OrdersConnection_id {
+  key: ID
+  connection: OrdersConnection
+}
+
+type OrdersConnectionAddress {
+  key: String
+  connection: OrdersConnection
+}
+
+type OrdersConnectionAmount {
+  key: Float
+  connection: OrdersConnection
+}
+
+type OrdersConnectionBrews {
+  key: JSON
+  connection: OrdersConnection
+}
+
+type OrdersConnectionCity {
+  key: String
+  connection: OrdersConnection
+}
+
+type OrdersConnectionCreatedAt {
+  key: DateTime
+  connection: OrdersConnection
+}
+
+type OrdersConnectionPostalCode {
+  key: String
+  connection: OrdersConnection
+}
+
+type OrdersConnectionUpdatedAt {
+  key: DateTime
+  connection: OrdersConnection
+}
+
+type OrdersGroupBy {
+  _id: [OrdersConnection_id]
+  createdAt: [OrdersConnectionCreatedAt]
+  updatedAt: [OrdersConnectionUpdatedAt]
+  address: [OrdersConnectionAddress]
+  postalCode: [OrdersConnectionPostalCode]
+  city: [OrdersConnectionCity]
+  brews: [OrdersConnectionBrews]
+  amount: [OrdersConnectionAmount]
+}
+
+input OrdersInput {
+  address: String!
+  postalCode: String!
+  city: String!
+  brews: JSON!
+  amount: Float!
+}
+
+type Query {
+  brand(id: ID!): Brands
+  brands(sort: String, limit: Int, start: Int, where: JSON): [Brands]
+  brandsConnection(sort: String, limit: Int, start: Int, where: JSON): BrandsConnection
+  brew(id: ID!): Brews
+  brews(sort: String, limit: Int, start: Int, where: JSON): [Brews]
+  brewsConnection(sort: String, limit: Int, start: Int, where: JSON): BrewsConnection
+  order(id: ID!): Orders
+  orders(sort: String, limit: Int, start: Int, where: JSON): [Orders]
+  ordersConnection(sort: String, limit: Int, start: Int, where: JSON): OrdersConnection
+  files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+  filesConnection(sort: String, limit: Int, start: Int, where: JSON): UploadFileConnection
+  role(id: ID!): UsersPermissionsRole
+
+  """
+  Retrieve all the existing roles. You can't apply filters on this query.
+  """
+  roles(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsRole]
+  rolesConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsRoleConnection
+  user(id: ID!): UsersPermissionsUser
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+  usersConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsUserConnection
+  me: UsersPermissionsMe
+}
+
+input RoleInput {
+  name: String!
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+input updateBrandsInput {
+  where: InputID
+  data: BrandsInput
+}
+
+type updateBrandsPayload {
+  brand: Brands
+}
+
+input updateBrewsInput {
+  where: InputID
+  data: BrewsInput
+}
+
+type updateBrewsPayload {
+  brew: Brews
+}
+
+input updateOrdersInput {
+  where: InputID
+  data: OrdersInput
+}
+
+type updateOrdersPayload {
+  order: Orders
+}
+
+input updateRoleInput {
+  where: InputID
+  data: RoleInput
+}
+
+type updateRolePayload {
+  role: UsersPermissionsRole
+}
+
+input updateUserInput {
+  where: InputID
+  data: UserInput
+}
+
+type updateUserPayload {
+  user: UsersPermissionsUser
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UploadFile {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  hash: String!
+  sha256: String
+  ext: String
+  mime: String!
+  size: String!
+  url: String!
+  provider: String!
+  public_id: String
+  related(sort: String, limit: Int, start: Int, where: JSON): [Morph]
+}
+
+type UploadFileAggregator {
+  count: Int
+}
+
+type UploadFileConnection {
+  values: [UploadFile]
+  groupBy: UploadFileGroupBy
+  aggregate: UploadFileAggregator
+}
+
+type UploadFileConnection_id {
+  key: ID
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionCreatedAt {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionExt {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionHash {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionMime {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionName {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionProvider {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionPublic_id {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionSha256 {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionSize {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUpdatedAt {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUrl {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileGroupBy {
+  _id: [UploadFileConnection_id]
+  createdAt: [UploadFileConnectionCreatedAt]
+  updatedAt: [UploadFileConnectionUpdatedAt]
+  name: [UploadFileConnectionName]
+  hash: [UploadFileConnectionHash]
+  sha256: [UploadFileConnectionSha256]
+  ext: [UploadFileConnectionExt]
+  mime: [UploadFileConnectionMime]
+  size: [UploadFileConnectionSize]
+  url: [UploadFileConnectionUrl]
+  provider: [UploadFileConnectionProvider]
+  public_id: [UploadFileConnectionPublic_id]
+}
+
+input UserInput {
+  username: String!
+  email: String!
+  provider: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+}
+
+type UsersPermissionsMe {
+  _id: ID!
+  username: String!
+  email: String!
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsMeRole
+}
+
+type UsersPermissionsMeRole {
+  _id: ID!
+  name: String!
+  description: String
+  type: String
+}
+
+type UsersPermissionsPermission {
+  _id: ID!
+  type: String!
+  controller: String!
+  action: String!
+  enabled: Boolean!
+  policy: String
+  role: UsersPermissionsRole
+}
+
+type UsersPermissionsRole {
+  _id: ID!
+  name: String!
+  description: String
+  type: String
+  permissions(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsPermission]
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+}
+
+type UsersPermissionsRoleAggregator {
+  count: Int
+}
+
+type UsersPermissionsRoleConnection {
+  values: [UsersPermissionsRole]
+  groupBy: UsersPermissionsRoleGroupBy
+  aggregate: UsersPermissionsRoleAggregator
+}
+
+type UsersPermissionsRoleConnection_id {
+  key: ID
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionDescription {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionName {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionType {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleGroupBy {
+  _id: [UsersPermissionsRoleConnection_id]
+  name: [UsersPermissionsRoleConnectionName]
+  description: [UsersPermissionsRoleConnectionDescription]
+  type: [UsersPermissionsRoleConnectionType]
+}
+
+type UsersPermissionsUser {
+  _id: ID!
+  username: String!
+  email: String!
+  provider: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsRole
+}
+
+type UsersPermissionsUserAggregator {
+  count: Int
+}
+
+type UsersPermissionsUserConnection {
+  values: [UsersPermissionsUser]
+  groupBy: UsersPermissionsUserGroupBy
+  aggregate: UsersPermissionsUserAggregator
+}
+
+type UsersPermissionsUserConnection_id {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionBlocked {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionConfirmed {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionEmail {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionProvider {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionRole {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionUsername {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserGroupBy {
+  _id: [UsersPermissionsUserConnection_id]
+  username: [UsersPermissionsUserConnectionUsername]
+  email: [UsersPermissionsUserConnectionEmail]
+  provider: [UsersPermissionsUserConnectionProvider]
+  confirmed: [UsersPermissionsUserConnectionConfirmed]
+  blocked: [UsersPermissionsUserConnectionBlocked]
+  role: [UsersPermissionsUserConnectionRole]
+}
