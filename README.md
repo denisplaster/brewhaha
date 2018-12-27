@@ -5,7 +5,7 @@ How to run Buy-a-Brew
 Clone the Buy-a-Brew Project
 In Terminal, clone the project from GitHub:
 
-git clone https://github.com/bowdentom/brewhaha.git buy-a-brew
+git clone https://github.com/denisplaster/brewhaha.git buy-a-brew
 This will clone the project into a folder called buy-a-brew, the project folder. Within this folder, you will find (amongst others), the client and server sub-folders.
 
 Install Strapi globally (used for the backend server)
